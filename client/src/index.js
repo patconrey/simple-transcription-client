@@ -7,6 +7,7 @@ import { Buffer } from 'buffer';
 import process from 'process';
 
 import Home from './Pages/Home'
+// import VADPage from './Pages/VAD';
 
 import ErrorBoundary from './ErrorBoundary';
 import ErrorHandler from './ErrorHandler';
@@ -23,6 +24,7 @@ const CompleteApp = () => {
                         <ErrorHandler>
                             <ScrollToTop>
                                 <Routes>
+                                    {/* <Route path="/" element={<VADPage />} /> */}
                                     <Route path="/" element={<Home />} />
                                 </Routes>
                             </ScrollToTop>
