@@ -12,14 +12,12 @@ class Stack {
     }
  
     push(element) {
-		this.items.push(element);
+		const numberOfItems = this.items.push(element);
 
-		if (this.items.length > 2) {
-			this.items.shift();
-			// console.log('In here')
-
+		if (numberOfItems > 0) {
 			// Needs to be a nested array of shape [1, length]
 			const flattenedSignal = Array(this.items.flat());
+			this.items.shift();
 
 			return flattenedSignal;
 		}
@@ -52,28 +50,12 @@ let signalStack = new Stack()
 // 3) W/ hop vs. w/ abutting
 // 4) timestamps
 
-// This actually looks like it prints out the correct values for
-// each sample. The weird thing is that there's a 22-length preface
-// on the output of this function that is the same for all buffers
-// decoded by this. The samples from this function from index 22 onward
-// match the samples obtained by reading in the audio file via torchaudio
-// THIS IS THE OLD IMPLEMENTATION!
 const decodeAudioBufferFromStream = buffer => {
-	// console.log(buffer)
 	return Array.from(
 		{ length: buffer.length / 2 },
 		(v, i) => buffer.readInt16LE(i * 2) / (2 ** 15)
 	)
 }
-
-// This works!
-// const decodeFloat32BufferFromStream = buffer => {
-// 	console.log(buffer)
-// 	return Array.from(
-// 		{ length: buffer.length / 4 },
-// 		(v, i) => buffer.readFloatLE(i * 4)
-// 	)
-// }
 
 AWS.config.update({ region: 'us-west-2' });
 if (process.env.NODE_ENV === 'development') {
